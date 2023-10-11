@@ -6,6 +6,14 @@ const harryPotter = new Book("Harry Potter and the Sorcerer's Stone", "J.K. Rowl
 
 const myLibrary = [theHobbit, harryPotter];
 const contentArea = document.querySelector('.project-cards');
+const newBookBtn = document.querySelector('.hbtn');
+const dialogBox = document.getElementById('bookDialog');
+const addButton = document.getElementById('submitBtn');
+const formTitle = document.getElementById('title');
+const formAuthor = document.getElementById('author');
+const formPages = document.getElementById("pages");
+const checkRead = document.getElementById('read');
+const cancelAdd = document.getElementById('cancelBtn');
 
 function Book(title, author, pages, read = false) {
     this.title = title
@@ -13,8 +21,8 @@ function Book(title, author, pages, read = false) {
     this.pages = pages
     this.read = read
     this.info = function(){
-        const txt = this.read ? 'read' : 'not read';
-        return this.title + ' by ' + this.author + ', ' + this.pages + 'pages, ' + txt;
+        const txt = this.read ? 'read.' : 'not read.';
+        return this.title + ' by ' + this.author + ', ' + this.pages + ' pages, ' + txt;
     }  
 }
 
@@ -34,6 +42,7 @@ function CreateCard() {
 }
 
 function AddBook(book) {
+    myLibrary.push(book)
     CreateCard();
     let card = contentArea.lastElementChild;
     let title = card.firstElementChild;
@@ -45,3 +54,31 @@ function AddBook(book) {
 function CheckBooks(library) {
     library.forEach(AddBook);
 }
+
+newBookBtn.addEventListener('click', () => {
+    dialogBox.showModal();
+});
+
+addButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (formTitle.value && formAuthor.value && formPages.value) {
+        console.log(formTitle.value);
+        let isRead = checkRead.checked 
+        let newBook = new Book(formTitle.value, formAuthor.value, formPages.value, isRead);
+        AddBook(newBook);
+        console.log('got here');
+        dialogBox.close();
+        formTitle.value = '';
+        formAuthor.value = '';
+        formPages.value = '';
+        checkRead.checked = false;
+    } else {
+        console.log('got here instead');
+    };
+});
+
+cancelAdd.addEventListener('click', () => {
+    dialogBox.close();
+});
+
+document.addEventListener("DOMContentLoaded", CheckBooks(myLibrary));
