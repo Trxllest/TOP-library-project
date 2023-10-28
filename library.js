@@ -1,5 +1,5 @@
-const theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", 295, false);
-const harryPotter = new Book("Harry Potter and the Sorcerer's Stone", "J.K. Rowling", 320, true);
+// const theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", 295, false);
+// const harryPotter = new Book("Harry Potter and the Sorcerer's Stone", "J.K. Rowling", 320, true);
 
 const myLibrary = [];
 const contentArea = document.querySelector('.project-cards');
@@ -12,15 +12,18 @@ const formPages = document.getElementById("pages");
 const checkRead = document.getElementById('read');
 const cancelAdd = document.getElementById('cancelBtn');
 
-function Book(title, author, pages, read = false) {
-    this.title = title
-    this.author = author
-    this.pages = pages
-    this.read = read
-    this.info = function(){
-        const txt = this.read ? 'read.' : 'not read.';
+class Book {
+    constructor(title, author, pages, read = false) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+    }
+    info = () => {
+        const txt =  this.read ? 'read.' : 'not read.';
         return this.title + ' by ' + this.author + ', ' + this.pages + ' pages, ' + txt;
     }  
+    
 }
 
 function CreateCard(book, index) {
